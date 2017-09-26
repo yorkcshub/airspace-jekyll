@@ -21,20 +21,38 @@ permalink: /
 <section id="intro">
   <div class="container">
     <div class="row">
-      <div class="col-md-7 col-sm-12">
+      <div class="col-md-12 col-sm-12">
         <div class="block">
           <div class="section-title">
-            <h2>About Us</h2>
-            <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics</p>
+            <h2>Upcoming Events</h2>
+              {% capture nowunix %}{{'now' | date: '%s'}}{% endcapture %}
+              {% capture posttime %}{{post.date | date: '%s'}}{% endcapture %}
+              <!-- You have to filter the array before passing it to the loop-->
+              {% assign posts = site.posts | sort:'date' | where_exp:'post', "post.date>=site.time" %}
+
+              {% if posts.size == 0 %}
+                <div class="container">
+                  <div class="post-area row">
+                  No upcoming events
+                  {{posts.size}}
+                  {{nowunix}}
+                  <hr/>
+                  {{posttime}}
+                  </div>
+                </div>
+              {% else %}
+                {% for post in posts limit:3 %}
+                      <div class="post-img col-lg-4 col-xl-4 col-md-4">
+                        <img src="{{ post.image | prepend: site.baseurl }}" alt="{{ post.title }}" title="{{ post.title }}">
+                        <a href="{{ post.url | prepend: site.baseurl }}" class="bold">{{ post.title }}</a>
+                        <p class="post-date">{{ post.date | date_to_long_string }}</p>
+                      </div>
+                {% endfor %}
+              {% endif %}
           </div>
-          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id </p>
+        
         </div>
       </div><!-- .col-md-7 close -->
-      <div class="col-md-5 col-sm-12">
-        <div class="block">
-          <img src="img/wrapper-img.png" alt="Img">
-        </div>
-      </div><!-- .col-md-5 close -->
     </div>
   </div>
 </section>
