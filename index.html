@@ -30,29 +30,31 @@ permalink: /
               <!-- You have to filter the array before passing it to the loop-->
               {% assign posts = site.posts | sort:'date' | where_exp:'post', "post.date>=site.time" %}
 
+              <div class="container ">
+                <div class="row display-flex">
               {% if posts.size == 0 %}
-                <div class="container">
-                  <div class="post-area row">
                   No upcoming events
-                  {{posts.size}}
-                  {{nowunix}}
-                  <hr/>
-                  {{posttime}}
                   </div>
-                </div>
+              </div>
               {% else %}
-                {% for post in posts limit:3 %}
-                      <div class="post-img col-lg-4 col-xl-4 col-md-4">
-                        <img src="{{ post.image | prepend: site.baseurl }}" alt="{{ post.title }}" title="{{ post.title }}">
-                        <a href="{{ post.url | prepend: site.baseurl }}" class="bold">{{ post.title }}</a>
-                        <p class="post-date">{{ post.date | date_to_long_string }}</p>
-                      </div>
-                {% endfor %}
+                  <div class="col-md-12 display-flex-inline">
+                    {% for post in posts limit:3 %}
+                          <div class="post-img col-lg-4 col-xl-4 col-md-4 thumbnail">
+                            <div class="img">
+                              <img src="{{ post.image | prepend: site.baseurl }}" alt="{{ post.title }}" title="{{ post.title }}">
+                            </div>
+                            <div class="caption">
+                              <h5 class="">{{ post.date | date:"%a, %d %b %r" |upcase}}</h5>
+                              <a href="{{ post.url | prepend: site.baseurl }}"><h4>{{ post.title }}</h4></a>
+                            </div>
+                          </div>
+                    {% endfor %}
+                    </div>
+                    <a href="{{ site.baseurl }}/events" class="float-right bold"><div class="btn btn-default center-block">More Events</div></a>
               {% endif %}
           </div>
-        
         </div>
-      </div><!-- .col-md-7 close -->
+      </div><!-- .col-md-12 close -->
     </div>
   </div>
 </section>
